@@ -5,6 +5,7 @@ backend:
     build:
       commands:
         - '# Execute Amplify CLI with the helper script'
+        - amplify version
         - amplifyPush --simple
 frontend:
   phases:
@@ -12,8 +13,8 @@ frontend:
       commands: []
   artifacts:
     # IMPORTANT - Please verify your build output directory
-    baseDirectory: /react/
+    baseDirectory: /
     files:
-      - '**/*'
+      - 'react/**/*'
   cache:
     paths: []
