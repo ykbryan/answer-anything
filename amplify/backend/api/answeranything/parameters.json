@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "answeranything",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authansweranything8b42223d",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

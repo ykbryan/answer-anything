@@ -1,0 +1,55 @@
+type Room
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, provider: iam, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  owner: String
+  status: RoomStatus!
+  rating: Float
+  messages: [Message] @connection(name: "RoomMessages")
+  createdAt: String
+}
+
+enum RoomStatus {
+  ACTIVE
+  INACTIVE
+}
+
+type Message
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, provider: iam, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  content: String!
+  owner: String
+  room: Room @connection(name: "RoomMessages")
+  status: MessageStatus!
+  rates: [Rate] @connection(name: "MessageRates")
+}
+
+enum MessageStatus {
+  ANSWERED
+  UNANSWERED
+}
+
+type Rate
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, provider: iam, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  owner: String
+  message: Message @connection(name: "MessageRates")
+}

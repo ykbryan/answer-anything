@@ -8,6 +8,8 @@ import FormControl from 'react-bootstrap/FormControl';
 
 import Amplify from '@aws-amplify/core';
 import Auth from '@aws-amplify/auth';
+import { DataStore } from '@aws-amplify/datastore';
+import { Room, RoomStatus } from './models';
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
 
@@ -19,6 +21,8 @@ function App() {
   let [message, setMessage] = useState(
     'Use your phone number & +65 (country code) to login'
   );
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [room, setRoom] = useState('');
 
   const password = Math.random().toString(10) + 'Abc#';
 
@@ -202,13 +206,100 @@ function App() {
 
   useEffect(() => {
     checkAuth();
+    getAvailableRooms();
+    const subscription = DataStore.observe(Room).subscribe((rm) => {
+      console.log(rm.model, rm.opType, rm.element);
+      getAvailableRooms();
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
+
+  const renderRooms = () => {
+    if (!rooms || rooms.length === 0) return <div>No rooms</div>;
+    return rooms.map((r) => (
+      <div key={r.id}>
+        {r.title}{' '}
+        <Button variant='outline-secondary' onClick={() => removeRoom(r.id)}>
+          Remove
+        </Button>
+      </div>
+    ));
+  };
+
+  const getAvailableRooms = async () => {
+    const result = await DataStore.query(Room, (rm) => rm.title('ne', ''), {
+      page: 0,
+      limit: 10,
+    });
+
+    if (result) {
+      // console.log(result);
+      // const arrangedRooms = result.sort((a, b) => {
+      //   if (b.rating) {
+      //     const aRating = parseInt(a.rating);
+      //     const aRating = parseInt(a.rating);
+      //     return parseInt(b.rating) - parseInt(a.rating);
+      //   } else {
+      //     return -1;
+      //   }
+      // });
+      setRooms(result);
+    }
+  };
+
+  const renderAddRoom = () => {
+    return (
+      <div>
+        <InputGroup className='mb-3'>
+          <FormControl
+            placeholder='Add Room'
+            aria-label='Add Room'
+            aria-describedby='basic-addon2'
+            onChange={handleRoomInput}
+            value={room}
+          />
+          <InputGroup.Append>
+            <Button variant='outline-secondary' onClick={addRoom}>
+              Add Room
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </div>
+    );
+  };
+
+  const handleRoomInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRoom(e.target.value);
+  };
+
+  const addRoom = async () => {
+    const title = room;
+    await DataStore.save(
+      new Room({
+        title: title,
+        rating: 0,
+        status: RoomStatus.ACTIVE,
+      })
+    );
+    setRoom('');
+  };
+
+  const removeRoom = async (roomId: string) => {
+    await DataStore.delete(Room, roomId);
+  };
+
+  const handleRemoveRoom = (roomId: string) => {
+    console.log(roomId);
+  };
 
   return (
     <div className='App'>
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
-        <h1>Custom OTP Auth Flow</h1>
+        <h1>Q&A Rooms</h1>
         <p>{message}</p>
         {renderEntireLoginInputForm()}
         {renderEntireOtpInputForm()}
@@ -218,6 +309,8 @@ function App() {
           </Button>
         </p>
         {renderSignOutButton()}
+        {renderRooms()}
+        {renderAddRoom()}
       </header>
     </div>
   );
