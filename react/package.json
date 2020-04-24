@@ -22,8 +22,8 @@
   },
   "scripts": {
     "start": "cp -rf ../src/* src/ && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "cp -rf ../src/* src/ && react-scripts build",
+    "test": "cp -rf ../src/* src/ && react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
