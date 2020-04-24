@@ -12,10 +12,11 @@ frontend:
     preBuild:
       commands:
         - cd react
-        - npm install
+        - npm install -g yarn
+        - yarn
     build:
       commands:
-        - npm run build
+        - yarn build
   artifacts:
     # IMPORTANT - Please verify your build output directory
     baseDirectory: /react/build/
