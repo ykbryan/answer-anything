@@ -1,0 +1,15 @@
+{
+    "master": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-answeranything-master-105716-authRole",
+            "UnauthRoleArn": "arn:aws:iam::566416766292:role/amplify-answeranything-master-105716-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::566416766292:role/amplify-answeranything-master-105716-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-answeranything-master-105716-deployment",
+            "UnauthRoleName": "amplify-answeranything-master-105716-unauthRole",
+            "StackName": "amplify-answeranything-master-105716",
+            "StackId": "arn:aws:cloudformation:us-west-2:566416766292:stack/amplify-answeranything-master-105716/5195b510-85d7-11ea-9b6f-029a7e70cbfe",
+            "AmplifyAppId": "d1gx6mm04ypqf0"
+        }
+    }
+}
