@@ -10,6 +10,20 @@
             "StackName": "amplify-answeranything-master-105716",
             "StackId": "arn:aws:cloudformation:us-west-2:566416766292:stack/amplify-answeranything-master-105716/5195b510-85d7-11ea-9b6f-029a7e70cbfe",
             "AmplifyAppId": "d1gx6mm04ypqf0"
+        },
+        "categories": {
+            "function": {
+                "answeranything8b42223dDefineAuthChallenge": {},
+                "answeranything8b42223dCreateAuthChallenge": {
+                    "CHALLENGEANSWER": ""
+                },
+                "answeranything8b42223dVerifyAuthChallengeResponse": {}
+            },
+            "auth": {
+                "answeranything8b42223d": {
+                    "hostedUIProviderCreds": "[]"
+                }
+            }
         }
     }
 }
