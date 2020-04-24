@@ -23,6 +23,12 @@
                 "answeranything8b42223d": {
                     "hostedUIProviderCreds": "[]"
                 }
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d1gx6mm04ypqf0",
+                    "type": "cicd"
+                }
             }
         }
     }
