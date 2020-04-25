@@ -10,6 +10,7 @@ build/
 dist/
 node_modules/
 aws-exports.js
+*/src/models/*
 */models/*
 awsconfiguration.json
 amplifyconfiguration.json
