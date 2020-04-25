@@ -11,8 +11,10 @@ frontend:
   phases:
     preBuild:
       commands:
+        - ls -l
         - cp -rf src/* react/src/
         - cd react
+        - ls -l
         - npm install -g yarn
         - yarn
     build:
