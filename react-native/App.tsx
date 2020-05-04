@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { AppState } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
@@ -9,7 +8,8 @@ import Amplify from '@aws-amplify/core';
 import Auth from '@aws-amplify/auth';
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
-import Home from './screens/Home';
+import Main from './screens/Main';
+import Login from './screens/Login';
 
 const loadFonts = async () => {
   // for native-base
@@ -39,13 +39,11 @@ export default function App() {
   useEffect(() => {
     setIsLoading(!isLoading);
     loadFonts();
-    // checkAuth();
+    checkAuth();
   }, []);
 
   if (!isLoading) return <AppLoading />;
   return (
-    <NavigationContainer>
-      <Home />
-    </NavigationContainer>
+    <NavigationContainer>{user ? <Main /> : <Login />}</NavigationContainer>
   );
 }
