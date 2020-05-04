@@ -6,6 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 import {
   Container,
   Header,
+  Left,
+  Body,
+  Right,
+  Icon,
   Content,
   Input,
   Item,
@@ -223,7 +227,17 @@ export default function App() {
   if (!isLoading) return <AppLoading />;
   return (
     <Container>
-      <Header />
+      <Header>
+        <Left />
+        <Body>
+          <Text>Rooms</Text>
+        </Body>
+        <Right>
+          <Button transparent>
+            <Icon name='md-add' />
+          </Button>
+        </Right>
+      </Header>
       <Content>
         <Text>Open up App.js to start working on your app! {message}</Text>
         <Item regular>
