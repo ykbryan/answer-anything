@@ -47,6 +47,7 @@ export default function App() {
 
   async function signOut() {
     await Auth.signOut();
+    await DataStore.clear();
     window.location.href = '/login';
   }
 
