@@ -87,7 +87,7 @@ export default function Detail() {
   }
 
   async function deleteQuestion(message_id: string) {
-    await DataStore.delete(Message, (m) => m.id('eq', message_id));
+    await DataStore.delete(Message, message_id);
   }
 
   const handleQnInput = (e: React.ChangeEvent<HTMLInputElement>) => {

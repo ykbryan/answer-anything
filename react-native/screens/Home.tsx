@@ -107,7 +107,10 @@ export default function Home() {
   const renderRooms = () => {
     if (!rooms || rooms.length === 0) return <Text>No rooms</Text>;
     return rooms.map((r) => (
-      <Item key={r.id} onPress={() => alert('enter')}>
+      <Item
+        key={r.id}
+        onPress={() => navigation.navigate('Detail', { roomId: r.id })}
+      >
         <Text>{r.title}</Text>
         <Button onPress={() => removeRoom(r.id)}>
           <Text>Remove</Text>
