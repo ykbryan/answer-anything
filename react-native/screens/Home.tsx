@@ -12,45 +12,79 @@ import {
   Button,
 } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
+import { Hub } from '@aws-amplify/core';
+import Auth from '@aws-amplify/auth';
 import { DataStore } from '@aws-amplify/datastore';
 import { Room, RoomStatus } from './../models';
 
 export default function Home() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [room, setRoom] = useState('');
+  const [user, setUser] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
-    getAvailableRooms();
-    const subscription = DataStore.observe(Room).subscribe((rm) => {
-      console.log('subscription');
-      console.log(rm.model, rm.opType, rm.element);
-      getAvailableRooms();
+    checkAuth();
+    Hub.listen('auth', (data) => {
+      const { payload } = data;
+      // console.log(
+      //   'A new auth event has happened: ',
+      //   payload.event,
+      //   payload.message
+      // );
+      if (!user && payload.event === 'signIn') {
+        setUser(payload.data);
+      } else if (user && payload.event === 'signOut') {
+        setUser(null);
+      }
     });
-    return () => {
-      subscription.unsubscribe();
-    };
+    console.log('useEffect checkAuth');
   }, []);
 
-  const getAvailableRooms = async () => {
-    const result = await DataStore.query(Room, (rm) => rm.title('ne', ''), {
-      page: 0,
-      limit: 10,
-    });
+  useEffect(() => {
+    if (user) {
+      getAvailableRooms();
+      const subscription = DataStore.observe(Room).subscribe(() => {
+        getAvailableRooms();
+      });
+      console.log('useEffect subscription');
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
+  }, [user]);
 
-    console.log('getAvailableRooms');
-    console.log(result);
-    if (result) {
-      // const arrangedRooms = result.sort((a, b) => {
-      //   if (b.rating) {
-      //     const aRating = parseInt(a.rating);
-      //     const aRating = parseInt(a.rating);
-      //     return parseInt(b.rating) - parseInt(a.rating);
-      //   } else {
-      //     return -1;
-      //   }
-      // });
-      setRooms(result);
+  async function checkAuth() {
+    await Auth.currentAuthenticatedUser()
+      .then((user) => {
+        setUser(user);
+      })
+      .catch((err) => {
+        console.log(err);
+        setUser(null);
+        navigation.navigate('Login');
+      });
+  }
+
+  const getAvailableRooms = async () => {
+    if (user) {
+      const result = await DataStore.query(Room, (rm) => rm.title('ne', ''), {
+        page: 0,
+        limit: 10,
+      });
+      // console.log(result);
+      if (result) {
+        // const arrangedRooms = result.sort((a, b) => {
+        //   if (b.rating) {
+        //     const aRating = parseInt(a.rating);
+        //     const aRating = parseInt(a.rating);
+        //     return parseInt(b.rating) - parseInt(a.rating);
+        //   } else {
+        //     return -1;
+        //   }
+        // });
+        setRooms(result);
+      }
     }
   };
 

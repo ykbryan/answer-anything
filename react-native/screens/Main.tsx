@@ -4,6 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './Home';
 import LoginScreen from './Login';
+import DetailScreen from './Detail';
+import AddroomScreen from './Addroom';
+import SettingsScreen from './Settings';
 
 const Stack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -34,7 +37,7 @@ const TabNavigator = () => {
           title: 'Settings',
         })}
         name='Settings'
-        component={HomeScreen}
+        component={SettingsScreen}
       />
     </Tab.Navigator>
   );
@@ -55,15 +58,15 @@ const StackNavigator = () => {
         options={() => ({
           headerShown: false,
         })}
-        name='Details'
-        component={HomeScreen}
+        name='Detail'
+        component={DetailScreen}
       />
       <HomeStack.Screen
         options={() => ({
           headerShown: false,
         })}
         name='Add'
-        component={HomeScreen}
+        component={AddroomScreen}
       />
     </HomeStack.Navigator>
   );
@@ -80,7 +83,7 @@ export default function Main() {
         options={({ route }) => ({
           headerShown: false,
         })}
-        name='HomeStackNavigator'
+        name='HomeStack'
         component={StackNavigator}
       />
       <Stack.Screen

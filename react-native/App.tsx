@@ -4,13 +4,11 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 
+import Main from './screens/Main';
+
 import Amplify from '@aws-amplify/core';
-import Auth from '@aws-amplify/auth';
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
-
-import Main from './screens/Main';
-import Login from './screens/Login';
 
 const loadFonts = async () => {
   // for native-base
@@ -23,28 +21,16 @@ const loadFonts = async () => {
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState(null);
 
-  function checkAuth() {
-    Auth.currentAuthenticatedUser()
-      .then((user) => {
-        console.log('yes');
-        console.log(user);
-        setUser(user);
-      })
-      .catch((err) => {
-        console.log(err);
-        setUser(null);
-      });
-  }
   useEffect(() => {
     setIsLoading(!isLoading);
     loadFonts();
-    checkAuth();
   }, []);
 
   if (!isLoading) return <AppLoading />;
   return (
-    <NavigationContainer>{user ? <Main /> : <Login />}</NavigationContainer>
+    <NavigationContainer>
+      <Main />
+    </NavigationContainer>
   );
 }

@@ -13,8 +13,10 @@ import {
   Text,
   Button,
 } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Login() {
+  const navigation = useNavigation();
   let [username, setUsername] = useState('');
   let [user, setUser] = useState('');
   let [otp, setOtp] = useState('');
@@ -26,7 +28,6 @@ export default function Login() {
   const password = Math.random().toString(10) + 'Abc#';
 
   const handleButton = () => {
-    console.log('here');
     switch (state) {
       case 'notLogin':
         signIn();
@@ -40,11 +41,8 @@ export default function Login() {
   };
 
   function signIn() {
-    console.log(username);
-
     Auth.signIn(username)
       .then((user) => {
-        console.log(user);
         setUser(user);
         setState('otpLogin');
       })
@@ -83,9 +81,7 @@ export default function Login() {
 
   function checkAuth() {
     Auth.currentAuthenticatedUser()
-      .then((user) => {
-        console.log('yes');
-        console.log(user);
+      .then(() => {
         setState('loggedIn');
       })
       .catch((err) => {
@@ -97,10 +93,10 @@ export default function Login() {
   function sendChallenge() {
     console.log('sendChallenge');
     Auth.sendCustomChallengeAnswer(user, otp)
-      .then((user) => {
+      .then(() => {
         setState('loggedIn');
         setMessage('successfully logged in');
-        console.log(user);
+        navigation.navigate('Home');
       })
       .catch((err) => {
         setState('notLogin');
