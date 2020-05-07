@@ -7,7 +7,8 @@ import {
   Right,
   Icon,
   Content,
-  Item,
+  List,
+  ListItem,
   Text,
   Button,
 } from 'native-base';
@@ -100,22 +101,15 @@ export default function Home() {
     setRoom('');
   };
 
-  const removeRoom = async (roomId: string) => {
-    await DataStore.delete(Room, roomId);
-  };
-
   const renderRooms = () => {
     if (!rooms || rooms.length === 0) return <Text>No rooms</Text>;
     return rooms.map((r) => (
-      <Item
+      <ListItem
         key={r.id}
         onPress={() => navigation.navigate('Detail', { roomId: r.id })}
       >
         <Text>{r.title}</Text>
-        <Button onPress={() => removeRoom(r.id)}>
-          <Text>Remove</Text>
-        </Button>
-      </Item>
+      </ListItem>
     ));
   };
 
@@ -132,7 +126,9 @@ export default function Home() {
           </Button>
         </Right>
       </Header>
-      <Content>{renderRooms()}</Content>
+      <Content>
+        <List>{renderRooms()}</List>
+      </Content>
     </Container>
   );
 }
