@@ -69,10 +69,14 @@ export default function Home() {
 
   const getAvailableRooms = async () => {
     if (user) {
-      const result = await DataStore.query(Room, (rm) => rm.title('ne', ''), {
-        page: 0,
-        limit: 10,
-      });
+      const result = await DataStore.query(
+        Room,
+        (rm) => rm.title('ne', '').status('eq', RoomStatus.ACTIVE),
+        {
+          page: 0,
+          limit: 10,
+        }
+      );
       // console.log(result);
       if (result) {
         // const arrangedRooms = result.sort((a, b) => {
@@ -84,7 +88,11 @@ export default function Home() {
         //     return -1;
         //   }
         // });
-        setRooms(result);
+        // setRooms(result);
+        const arrangedRooms = result.sort((a, b) => {
+          return (b.rating ? b.rating : 0) - (a.rating ? a.rating : 0);
+        });
+        setRooms(arrangedRooms);
       }
     }
   };

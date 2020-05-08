@@ -14,6 +14,21 @@
             "build": true,
             "providerPlugin": "awscloudformation",
             "service": "Lambda"
+        },
+        "calculateRatings": {
+            "build": true,
+            "providerPlugin": "awscloudformation",
+            "service": "Lambda",
+            "dependsOn": [
+                {
+                    "category": "api",
+                    "resourceName": "answeranything",
+                    "attributes": [
+                        "GraphQLAPIIdOutput",
+                        "GraphQLAPIEndpointOutput"
+                    ]
+                }
+            ]
         }
     },
     "auth": {
@@ -59,13 +74,6 @@
             "output": {
                 "authConfig": {
                     "additionalAuthenticationProviders": [
-                        {
-                            "authenticationType": "API_KEY",
-                            "apiKeyConfig": {
-                                "description": "public",
-                                "apiKeyExpirationDays": "365"
-                            }
-                        },
                         {
                             "authenticationType": "AWS_IAM"
                         }
