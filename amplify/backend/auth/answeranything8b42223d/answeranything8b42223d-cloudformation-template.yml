@@ -150,16 +150,16 @@ Parameters:
       
   hostedUIProviderMeta:
     Type: String
-              
-  hostedUIProviderCreds:
-    Type: String
                       
   authProviders:
     Type: CommaDelimitedList
       
   oAuthMetadata:
     Type: String
-                        
+              
+  hostedUIProviderCreds:
+    Type: String
+            
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
