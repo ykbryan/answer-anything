@@ -5,10 +5,10 @@
   "javascript": {
     "framework": "react",
     "config": {
-      "SourceDir": "src",
-      "DistributionDir": "dist",
-      "BuildCommand": "npm run-script build",
-      "StartCommand": "npm run-script start"
+      "SourceDir": "react/src",
+      "DistributionDir": "react/build",
+      "BuildCommand": "cd react && npm run-script build",
+      "StartCommand": "cd react && npm run-script start"
     }
   },
   "providers": ["awscloudformation"]

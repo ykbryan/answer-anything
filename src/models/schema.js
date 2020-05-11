@@ -59,6 +59,13 @@ export const schema = {
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -86,9 +93,17 @@ export const schema = {
                             },
                             {
                                 "allow": "private",
-                                "provider": "iam",
+                                "provider": "userPools",
                                 "operations": [
                                     "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
+                                "provider": "iam",
+                                "operations": [
+                                    "read",
+                                    "update"
                                 ]
                             }
                         ]
@@ -275,5 +290,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "ad14141555ca7f7ed2d20b70e2aa52db"
+    "version": "a34cb6e537fb0b5e76147ad089d2d532"
 };

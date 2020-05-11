@@ -20,6 +20,7 @@ export declare class Room {
   readonly rating?: number;
   readonly messages?: Message[];
   readonly createdAt?: string;
+  readonly updatedAt?: string;
   constructor(init: ModelInit<Room>);
   static copyOf(source: Room, mutator: (draft: MutableModel<Room>) => MutableModel<Room> | void): Room;
 }
