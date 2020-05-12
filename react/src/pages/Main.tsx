@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 import { DataStore } from '@aws-amplify/datastore';
-import { Room, RoomStatus } from './../models';
+import { Room, RoomStatus, Post } from './../models';
 
 export default function Main() {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -26,6 +26,14 @@ export default function Main() {
         {r.title}
       </ListGroup.Item>
     ));
+  };
+
+  const getPosts = async () => {
+    const result = await DataStore.query(Post, (p) => p.title('ne', ''), {
+      page: 0,
+      limit: 10,
+    });
+    console.log(result);
   };
 
   const getAvailableRooms = async () => {

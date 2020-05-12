@@ -95,7 +95,8 @@ export const schema = {
                                 "allow": "private",
                                 "provider": "userPools",
                                 "operations": [
-                                    "read"
+                                    "read",
+                                    "update"
                                 ]
                             },
                             {
@@ -289,6 +290,54 @@ export const schema = {
             ]
         }
     },
-    "nonModels": {},
-    "version": "a34cb6e537fb0b5e76147ad089d2d532"
+    "nonModels": {
+        "Post": {
+            "name": "Post",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "title": {
+                    "name": "title",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "comments": {
+                    "name": "comments",
+                    "isArray": true,
+                    "type": {
+                        "nonModel": "Comment"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        },
+        "Comment": {
+            "name": "Comment",
+            "fields": {
+                "postId": {
+                    "name": "postId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "content": {
+                    "name": "content",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        }
+    },
+    "version": "4c9728bd59396bfa2d594ca0fa175c2a"
 };

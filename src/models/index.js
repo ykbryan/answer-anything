@@ -12,12 +12,14 @@ const MessageStatus = {
   "UNANSWERED": "UNANSWERED"
 };
 
-const { Room, Message, Rate } = initSchema(schema);
+const { Room, Message, Rate, Post, Comment } = initSchema(schema);
 
 export {
   Room,
   Message,
   Rate,
   RoomStatus,
-  MessageStatus
+  MessageStatus,
+  Post,
+  Comment
 };

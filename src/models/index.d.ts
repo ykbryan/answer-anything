@@ -10,7 +10,18 @@ export enum MessageStatus {
   UNANSWERED = "UNANSWERED"
 }
 
+export declare class Post {
+  readonly id: string;
+  readonly title: string;
+  readonly comments?: Comment[];
+  constructor(init: ModelInit<Post>);
+}
 
+export declare class Comment {
+  readonly postId: string;
+  readonly content?: string;
+  constructor(init: ModelInit<Comment>);
+}
 
 export declare class Room {
   readonly id: string;

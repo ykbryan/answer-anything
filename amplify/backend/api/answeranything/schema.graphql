@@ -55,3 +55,16 @@ type Rate
   owner: String
   message: Message @connection(name: "MessageRates")
 }
+
+type Query {
+  posts: [Post] @function(name: "answeranythingposts-${env}") @aws_iam
+}
+type Post @aws_iam {
+  id: ID!
+  title: String!
+  comments: [Comment] @function(name: "answeranythingposts-${env}")
+}
+type Comment @aws_iam {
+  postId: ID!
+  content: String
+}
