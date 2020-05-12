@@ -28,13 +28,13 @@ export default function Main() {
     ));
   };
 
-  const getPosts = async () => {
-    const result = await DataStore.query(Post, (p) => p.title('ne', ''), {
-      page: 0,
-      limit: 10,
-    });
-    console.log(result);
-  };
+  // const getPosts = async () => {
+  //   const result = await DataStore.query(Post, (p) => p.title('ne', ''), {
+  //     page: 0,
+  //     limit: 10,
+  //   });
+  //   console.log(result);
+  // };
 
   const getAvailableRooms = async () => {
     const result = await DataStore.query(

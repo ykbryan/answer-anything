@@ -58,6 +58,11 @@ type Rate
 
 type Query {
   posts: [Post] @function(name: "answeranythingposts-${env}") @aws_iam
+  getWeather: WeatherAPI
+    @http(
+      url: "https://api.openweathermap.org/data/2.5/weather?q=:query&units=:units&APPID=:appid"
+    )
+    @aws_iam
 }
 type Post @aws_iam {
   id: ID!
@@ -67,4 +72,35 @@ type Post @aws_iam {
 type Comment @aws_iam {
   postId: ID!
   content: String
+}
+type WeatherAPI @aws_iam {
+  id: ID!
+  name: String!
+  base: String
+  cod: String
+  message: String
+  main: WeatherMain
+  sys: WeatherSys
+  weather: [Weather]
+  wind: WeatherWind
+}
+type WeatherMain @aws_iam {
+  feels_like: Float
+  humidity: Int
+  pressure: Int
+  temp: Float
+}
+type WeatherSys @aws_iam {
+  country: String
+  sunrise: Int
+  sunset: Int
+}
+type Weather @aws_iam {
+  description: String
+  icon: String
+  main: String
+}
+type WeatherWind @aws_iam {
+  deg: Int
+  speed: Float
 }
